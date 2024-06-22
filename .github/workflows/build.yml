@@ -39,7 +39,7 @@ jobs:
           docker push sevenajay/myntra:latest
         env:
           DOCKER_CLI_ACI: 1
-
+echo " first deployment"
       - name: Docker Scout Image Scan
         run: |
           docker-scout quickview sevenajay/myntra:latest
