@@ -39,4 +39,4 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
         with:
-          registries: "992382639259.dkr.ecr.eu-north-1.amazonaws.com/kaam25"
+          registry: 992382639259.dkr.ecr.eu-north-1.amazonaws.com/kaam25
