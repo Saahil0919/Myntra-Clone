@@ -48,10 +48,10 @@ jobs:
            ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
            IMAGE_TAG: ${{ github.sha }}
         run: |
-         echo "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+         echo "$ECR_REGISTRY/kaam25:$IMAGE_TAG"
+         docker build -t $ECR_REGISTRY/kaam25:$IMAGE_TAG .
          echo "aws ecr-public describe-repositories --repository-names $ECR_REPOSITORY --region $AWS_REGION"
-         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-         echo " {\"ECR_REGISTRY\":\"$ECR_REGISTRY\",\"IMAGE_TAG\":\"$IMAGE_TAG\",\"ECR_REPOSITORY\":\"$ECR_REPOSITORY\"}" > ecr-details.json
+         docker push $ECR_REGISTRY/kaam25:$IMAGE_TAG
+         echo " {\"ECR_REGISTRY\":\"$ECR_REGISTRY\",\"IMAGE_TAG\":\"$IMAGE_TAG\",\"ECR_REPOSITORY\":\"kaam25\"}" > ecr-details.json
          ls -la  # List files to verify ecr-details.json is created
         
