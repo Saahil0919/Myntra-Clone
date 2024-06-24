@@ -78,6 +78,6 @@ jobs:
         env:
          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}       
         run: |
-         TAG= $(cat ecr-details.json | jq -r '.IMAGE_TAG')
+         TAG=$(cat ecr-details.json | jq -r '.IMAGE_TAG')
          sed -i.bak "s| 992382639259.dkr.ecr.eu-north-1.amazonaws.com/kaam25:96366634754672d8708e81d2a09ec1f58d8d8705|$ECR_REGISTRY/$ECR_REPOSITORY:$TAG|g" deployment-service.yml && \
          kubectl apply -f deployment-service.yml
