@@ -14,10 +14,10 @@ spec:
         app: myntra
     spec:
       containers:
-      - name: myntra
-        image: 992382639259.dkr.ecr.eu-north-1.amazonaws.com/kaam25:96366634754672d8708e81d2a09ec1f58d8d8705
-        ports:
-        - containerPort: 3000   # Use port 3000
+        - name: myntra
+          image: 992382639259.dkr.ecr.eu-north-1.amazonaws.com/kaam25:96366634754672d8708e81d2a09ec1f58d8d8705
+          ports:
+            - containerPort: 3000
 
 ---
 apiVersion: v1
@@ -28,7 +28,7 @@ spec:
   selector:
     app: myntra
   ports:
-  - protocol: TCP
-    port: 80                 # Expose port 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
