@@ -70,7 +70,10 @@ jobs:
         with:
           name: ecr-details
           path: .  # Download path where the artifact will be saved
-
+          
+      - name: update kubeconfig 
+        run:  aws eks --region eu-north-1 update-kubeconfig  --name myntra
+        
       - name: Deploy to EKS
         env:
          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}       
