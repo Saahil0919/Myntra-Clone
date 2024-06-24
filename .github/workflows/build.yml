@@ -5,53 +5,22 @@ on:
     branches:
       - main
 
+
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    environment: development
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@master
+      - uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-
       # If you wish to fail your job when the Quality Gate is red, uncomment the
       # following lines. This would typically be used to fail a deployment.
-      # - name: SonarQube Quality Gate
-      #   uses: sonarsource/sonarqube-quality-gate-action@master
+      # - uses: sonarsource/sonarqube-quality-gate-action@master
       #   timeout-minutes: 5
       #   env:
       #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-north-1
-          
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
-        with:
-          registry: 992382639259.dkr.ecr.eu-north-1.amazonaws.com/kaam25
-      - name: Build, tag, and push image to Amazon ECR
-        id: build-image
-        env:
-           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-           IMAGE_TAG: ${{ github.sha }}
-        run: |
-         echo "$ECR_REGISTRY/kaam25:$IMAGE_TAG"
-         docker build -t $ECR_REGISTRY/kaam25:$IMAGE_TAG .
-         echo "aws ecr-public describe-repositories --repository-names $ECR_REPOSITORY --region $AWS_REGION"
-         docker push $ECR_REGISTRY/kaam25:$IMAGE_TAG
-         echo " {\"ECR_REGISTRY\":\"$ECR_REGISTRY\",\"IMAGE_TAG\":\"$IMAGE_TAG\",\"ECR_REPOSITORY\":\"kaam25\"}" > ecr-details.json
-         ls -la  # List files to verify ecr-details.json is created
-        
