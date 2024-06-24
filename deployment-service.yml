@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: myntra
-          image: 992382639259.dkr.ecr.eu-north-1.amazonaws.com/kaam25:96366634754672d8708e81d2a09ec1f58d8d8705
+          image: "992382639259.dkr.ecr.eu-north-1.amazonaws.com/kaam25:96366634754672d8708e81d2a09ec1f58d8d8705"
           ports:
             - containerPort: 3000
 
@@ -23,7 +23,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: myntra-service
+  name: myntra-service  # Line 19 starts here
 spec:
   selector:
     app: myntra
