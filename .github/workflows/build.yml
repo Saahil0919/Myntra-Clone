@@ -55,4 +55,9 @@ jobs:
          docker push $ECR_REGISTRY/kaam25:$IMAGE_TAG
          echo " {\"ECR_REGISTRY\":\"$ECR_REGISTRY\",\"IMAGE_TAG\":\"$IMAGE_TAG\",\"ECR_REPOSITORY\":\"kaam25\"}" > ecr-details.json
          ls -la  # List files to verify ecr-details.json is created
+      - name: Update Kubernetes deployment
+        run: |
+          aws eks --region eu-north-1 update-kubeconfig --name myntra
+          
+
         
